@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Conversor de Texto</title>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Conversor de texto (v0.08.20)</h1>
+        <div>
+            <textarea name="inputText" id="textarea" placeholder="Digite o texto a ser convertido..." autofocus></textarea>
+        </div>
+        <div>
+            <button id="copy" class="button">Copiar Texto</button>
+            <button id="upper" class="button">CAIXA ALTA</button>
+            <button id="lower" class="button">caixa baixa</button>
+            <button id="alternating" class="button">cAiXa aLtErNaDa</button>
+            <button id='sentence' class="button">Caixa de sentencia</button>
+
+        </div>
+
+
+        <script>
+
+            var textarea = document.querySelector('textarea');
+            var copyButton = document.getElementById('copy');
+            var upperButton = document.getElementById('upper');
+            var lowerButton = document.getElementById('lower');
+            var alternatingButton = document.getElementById('alternating');
+            var sentenceButton = document.getElementById('sentence');
+            
+            copyButton.onclick = function(){
+                textarea.select();
+                document.execCommand('copy');
+                console.log('O TEXTO "' + textarea.value + '" FOI COPIADO!')
+            }
+
+            upperButton.onclick = function(){
+                var texto = textarea.value;
+                textarea.value = texto.toUpperCase();
+            }
+
+            lowerButton.onclick = function(){
+                var texto = textarea.value;
+                textarea.value = texto.toLowerCase();
+            }
+
+            alternatingButton.onclick = function(){
+                var texto = textarea.value.toLowerCase();
+                var str="";
+
+                for (var i=0; i<texto.length; i++) {
+                    var char = String.fromCharCode(texto.charCodeAt(i));
+                    if (i % 2 == 1) char = char.toUpperCase();
+                    
+                    str = str.concat(char);
+                }
+                
+                textarea.value = str;
+            }
+            
+            sentenceButton.onclick = function(){
+                var texto = textarea.value.toLowerCase();
+                var str="";
+
+                for (var i=0; i<texto.length; i++) {
+                    var char = String.fromCharCode(texto.charCodeAt(i));
+                    
+                    if (i==0) char = char.toUpperCase();
+                    if (char == ".") {
+                        var ponto=i;
+                        if(String.fromCharCode(texto.charCodeAt(ponto++)==" ")){
+                            str = str.concat(char+String.fromCharCode(texto.charCodeAt(ponto++)));
+                            i+=2;
+                            char = String.fromCharCode(texto.charCodeAt(i));
+                            char = char.toUpperCase();
+                            console.log("fraase com ponto + espaço");
+                        }else {
+                            str = str.concat(char+' '+ String.fromCharCode(texto.charCodeAt(ponto)));
+                            i+=3;
+                            char = String.fromCharCode(texto.charCodeAt(i));
+                            char = char.toUpperCase();
+                            console.log("frase com ponto");
+                        }
+                    }
+                    str = str.concat(char);
+                }
+                textarea.value = str;
+            }
+
+          
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,28 @@
+body{
+    background-color: gainsboro;
+}
+
+div{  
+    text-align: center;
+}
+textarea{
+    font-family: 'Courier New', 'Times New Roman', Times, serif;
+    font-size: 18px;
+    background-color: #ffff;
+    height: 25em;
+    width: 90em;
+    resize: vertical;
+}
+
+button{
+    font-size: 16px;
+    block-size: 30px;
+}
+
+button#copy{
+    background-color: rgb(13, 155, 67);
+    position: absolute;
+    margin-left: 800px;
+
+}
+
