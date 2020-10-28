@@ -6,7 +6,7 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Conversor de texto (v0.08.20)</h1>
+        <h1>Conversor de texto (v0.10.20)</h1>
         <div>
             <textarea name="inputText" id="textarea" placeholder="Digite o texto a ser convertido..." autofocus></textarea>
         </div>
@@ -16,7 +16,8 @@
             <button id="lower" class="button">caixa baixa</button>
             <button id="alternating" class="button">cAiXa aLtErNaDa</button>
             <button id='sentence' class="button">Caixa de sentencia</button>
-
+            <button id='star' class="button"> ****** </button>
+            <button id="random" lass="button"> @#!&*%$ </button>
         </div>
 
 
@@ -28,6 +29,8 @@
             var lowerButton = document.getElementById('lower');
             var alternatingButton = document.getElementById('alternating');
             var sentenceButton = document.getElementById('sentence');
+            var starButton = document.getElementById('star');
+            var randomButton = document.getElementById('random');
             
             copyButton.onclick = function(){
                 textarea.select();
@@ -58,37 +61,65 @@
                 
                 textarea.value = str;
             }
-            
-            sentenceButton.onclick = function(){
-                var texto = textarea.value.toLowerCase();
-                var str="";
 
-                for (var i=0; i<texto.length; i++) {
+            sentenceButton.onclick = function(){
+                var texto = textarea.value;
+                var str = "";
+                
+                for(var i=0; i<texto.length; i++){
                     var char = String.fromCharCode(texto.charCodeAt(i));
-                    
-                    if (i==0) char = char.toUpperCase();
-                    if (char == ".") {
-                        var ponto=i;
-                        if(String.fromCharCode(texto.charCodeAt(ponto++)==" ")){
-                            str = str.concat(char+String.fromCharCode(texto.charCodeAt(ponto++)));
-                            i+=2;
-                            char = String.fromCharCode(texto.charCodeAt(i));
-                            char = char.toUpperCase();
-                            console.log("fraase com ponto + espaço");
-                        }else {
-                            str = str.concat(char+' '+ String.fromCharCode(texto.charCodeAt(ponto)));
-                            i+=3;
-                            char = String.fromCharCode(texto.charCodeAt(i));
-                            char = char.toUpperCase();
-                            console.log("frase com ponto");
-                        }
+                    var nextChar = String.fromCharCode(texto.charCodeAt(i+1));
+                    char=char.toLowerCase();
+                    if(i==0)str+=char.toUpperCase();
+                    else if(char=="." && nextChar==" "){
+                        var nextNextChar = String.fromCharCode(texto.charCodeAt(i+2));
+                        str+=char;
+                        str+=nextChar;
+                        str+=nextNextChar.toUpperCase();
+                        i+=2;
+                    }else if(char=="." && nextChar!=" "){
+                        str+=char;
+                        str+=" ";
+                        str+=nextChar.toUpperCase();
+                        i++;
                     }
-                    str = str.concat(char);
+                    else str+=char;
                 }
                 textarea.value = str;
             }
 
-          
+            starButton.onclick = function(){
+                var texto = textarea.value;
+                var str = "";
+                
+                for(var i=0; i<texto.length; i++){
+                    var char = String.fromCharCode(texto.charCodeAt(i));
+                    if(char==" ")str+=char;
+                    else if(char==".")str+=char;
+                    else if(char==",")str+=char;
+                    else if(char=="?")str+=char;
+                    else str+="*";
+                }
+                textarea.value = str;
+            }
+
+            randomButton.onclick = function(){
+                var str = "";
+                var texto = textarea.value;
+                var randomChar = "@#!&*%$";
+                var charactersLength = randomChar.length;
+                for(var i=0; i<texto.length; i++){
+                    var char = String.fromCharCode(texto.charCodeAt(i));
+                    if(char==" ")str+=char;
+                    //else if(char==".")str+=char;
+                    //else if(char==",")str+=char;
+                    //else if(char=="?")str+=char;
+                    //else if(char=="!")str+=char;
+                    else str += randomChar.charAt(Math.floor(Math.random() * charactersLength));
+                }
+                textarea.value = str;
+            }
+   
         </script>
     </body>
 </html>
