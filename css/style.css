@@ -6,12 +6,13 @@ div{
     text-align: center;
 }
 textarea{
-    font-family: 'Courier New', 'Times New Roman', Times, serif;
+    font-family: 'Courier New', 'Times New Roman', 'Times Sans Serif';
     font-size: 18px;
     background-color: #ffff;
     height: 25em;
-    width: 90em;
+    width: 80em;
     resize: vertical;
+
 }
 
 button{

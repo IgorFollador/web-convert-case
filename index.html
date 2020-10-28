@@ -6,7 +6,7 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Conversor de texto (v0.10.20)</h1>
+        <h1>Conversor de texto (v1.10.20)</h1>
         <div>
             <textarea name="inputText" id="textarea" placeholder="Digite o texto a ser convertido..." autofocus></textarea>
         </div>
@@ -19,7 +19,6 @@
             <button id='star' class="button"> ****** </button>
             <button id="random" lass="button"> @#!&*%$ </button>
         </div>
-
 
         <script>
 
@@ -69,10 +68,11 @@
                 for(var i=0; i<texto.length; i++){
                     var char = String.fromCharCode(texto.charCodeAt(i));
                     var nextChar = String.fromCharCode(texto.charCodeAt(i+1));
+                    var nextNextChar = String.fromCharCode(texto.charCodeAt(i+2));
+                    var nextNextChar2 = String.fromCharCode(texto.charCodeAt(i+3));
                     char=char.toLowerCase();
                     if(i==0)str+=char.toUpperCase();
                     else if(char=="." && nextChar==" "){
-                        var nextNextChar = String.fromCharCode(texto.charCodeAt(i+2));
                         str+=char;
                         str+=nextChar;
                         str+=nextNextChar.toUpperCase();
@@ -82,8 +82,17 @@
                         str+=" ";
                         str+=nextChar.toUpperCase();
                         i++;
-                    }
-                    else str+=char;
+                    }else if(char==" " && nextChar=="." && nextNextChar==" "){
+                        str+=nextChar;
+                        str+=nextNextChar;
+                        str+=nextNextChar2.toUpperCase();
+                        i+=3;
+                    }else if(char==" " && nextChar=="." && nextNextChar!=" "){
+                        str+=nextChar;
+                        str+=" ";
+                        str+=nextNextChar.toUpperCase();
+                        i+=2;
+                    }else str+=char;
                 }
                 textarea.value = str;
             }
