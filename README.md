@@ -1,14 +1,14 @@
 # WebConvertCase
 
-Site Web, com base em JavaScript para conversão de texto.
-Primeira versão 0.08.20;
-Segunda versão 0.10.20;
-# Funcionalidades:
-    *Texto maiúsculo;
-    *Texto minúsculo;
-    *Texto alternado;
-    *Texto setencial;
-    *Char "*";
-    *Char random.
+### Website, based on JavaScript to text conversion.
+#### Focused on language learning!
+
+# Features:
+ - Uppercase text;
+ - Lowercase text;
+ - Alternate text;
+ - Sentential text;
+ - Characters "*";
+ - Random character.
 
 
