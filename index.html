@@ -1,127 +1,110 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <title>Conversor de Texto</title>
-        <meta charset="utf-8">
-	<link rel="icon" href="./icon.png">
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <h1>Conversor de texto (v0.10.20)</h1>
-        <div>
-            <textarea name="inputText" id="textarea" placeholder="Digite o texto a ser convertido..." autofocus></textarea>
-        </div>
-        <div>
-            <button id="copy" class="button">Copiar Texto</button>
-            <button id="upper" class="button">CAIXA ALTA</button>
-            <button id="lower" class="button">caixa baixa</button>
-            <button id="alternating" class="button">cAiXa aLtErNaDa</button>
-            <button id='sentence' class="button">Caixa de sentencia</button>
-            <button id='star' class="button"> ****** </button>
-            <button id="random" lass="button"> @#!&*%$ </button>
-        </div>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Case — Conversor de Caixa de Texto Online Gratuito</title>
+    <meta
+      name="description"
+      content="Converta texto para caixa alta, caixa baixa, title case, camelCase, snake_case e mais. Ferramenta gratuita 100% no navegador — seus textos nunca saem do seu computador."
+    />
+    <meta
+      name="keywords"
+      content="conversor de texto, caixa alta, caixa baixa, title case, camelcase, snake case, kebab case, convert case, transformar texto"
+    />
+    <meta name="author" content="Waykey" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#18181b" />
+    <link rel="canonical" href="https://convert-case.waykey.com.br/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://convert-case.waykey.com.br/" />
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
 
-        <script>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Convert Case" />
+    <meta property="og:url" content="https://convert-case.waykey.com.br/" />
+    <meta
+      property="og:title"
+      content="Convert Case — Conversor de Caixa de Texto Online Gratuito"
+    />
+    <meta
+      property="og:description"
+      content="Converta texto para caixa alta, caixa baixa, title case, camelCase, snake_case e mais. Processamento 100% local no navegador."
+    />
+    <meta property="og:image" content="https://convert-case.waykey.com.br/favicon.svg" />
 
-            var textarea = document.querySelector('textarea');
-            var copyButton = document.getElementById('copy');
-            var upperButton = document.getElementById('upper');
-            var lowerButton = document.getElementById('lower');
-            var alternatingButton = document.getElementById('alternating');
-            var sentenceButton = document.getElementById('sentence');
-            var starButton = document.getElementById('star');
-            var randomButton = document.getElementById('random');
-            
-            copyButton.onclick = function(){
-                textarea.select();
-                document.execCommand('copy');
-                console.log('O TEXTO "' + textarea.value + '" FOI COPIADO!')
-            }
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Convert Case — Conversor de Caixa de Texto Online Gratuito"
+    />
+    <meta
+      name="twitter:description"
+      content="Converta texto para caixa alta, caixa baixa, title case, camelCase, snake_case e mais. Processamento 100% local no navegador."
+    />
+    <meta name="twitter:image" content="https://convert-case.waykey.com.br/favicon.svg" />
 
-            upperButton.onclick = function(){
-                var texto = textarea.value;
-                textarea.value = texto.toUpperCase();
-            }
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Convert Case",
+        "alternateName": "Conversor de Caixa de Texto",
+        "url": "https://convert-case.waykey.com.br/",
+        "description": "Conversor gratuito de caixa de texto com uppercase, lowercase, title case, camelCase, snake_case e mais — 100% no navegador.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "pt-BR",
+        "isAccessibleForFree": true,
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "BRL"
+        },
+        "featureList": [
+          "Caixa alta e caixa baixa",
+          "Title case e sentence case",
+          "Caixa alternada e inversão de caixa",
+          "camelCase, PascalCase, snake_case e kebab-case",
+          "Limpar espaços, trim e inverter texto",
+          "Mascaramento com asteriscos e caracteres aleatórios",
+          "Copiar para área de transferência",
+          "Upload de arquivos .txt",
+          "Processamento 100% local — sem upload de arquivos"
+        ]
+      }
+    </script>
 
-            lowerButton.onclick = function(){
-                var texto = textarea.value;
-                textarea.value = texto.toLowerCase();
-            }
-
-            alternatingButton.onclick = function(){
-                var texto = textarea.value.toLowerCase();
-                var str="";
-
-                for (var i=0; i<texto.length; i++) {
-                    var char = String.fromCharCode(texto.charCodeAt(i));
-                    if (i % 2 == 1) char = char.toUpperCase();
-                    
-                    str = str.concat(char);
-                }
-                
-                textarea.value = str;
-            }
-
-            sentenceButton.onclick = function(){
-                var texto = textarea.value;
-                var str = "";
-                
-                for(var i=0; i<texto.length; i++){
-                    var char = String.fromCharCode(texto.charCodeAt(i));
-                    var nextChar = String.fromCharCode(texto.charCodeAt(i+1));
-                    char=char.toLowerCase();
-                    if(i==0)str+=char.toUpperCase();
-                    else if(char=="." && nextChar==" "){
-                        var nextNextChar = String.fromCharCode(texto.charCodeAt(i+2));
-                        str+=char;
-                        str+=nextChar;
-                        str+=nextNextChar.toUpperCase();
-                        i+=2;
-                    }else if(char=="." && nextChar!=" "){
-                        str+=char;
-                        str+=" ";
-                        str+=nextChar.toUpperCase();
-                        i++;
-                    }
-                    else str+=char;
-                }
-                textarea.value = str;
-            }
-
-            starButton.onclick = function(){
-                var texto = textarea.value;
-                var str = "";
-                
-                for(var i=0; i<texto.length; i++){
-                    var char = String.fromCharCode(texto.charCodeAt(i));
-                    if(char==" ")str+=char;
-                    else if(char==".")str+=char;
-                    else if(char==",")str+=char;
-                    else if(char=="?")str+=char;
-                    else str+="*";
-                }
-                textarea.value = str;
-            }
-
-            randomButton.onclick = function(){
-                var str = "";
-                var texto = textarea.value;
-                var randomChar = "@#!&*%$";
-                var charactersLength = randomChar.length;
-                for(var i=0; i<texto.length; i++){
-                    var char = String.fromCharCode(texto.charCodeAt(i));
-                    if(char==" ")str+=char;
-                    //else if(char==".")str+=char;
-                    //else if(char==",")str+=char;
-                    //else if(char=="?")str+=char;
-                    //else if(char=="!")str+=char;
-                    else str += randomChar.charAt(Math.floor(Math.random() * charactersLength));
-                }
-                textarea.value = str;
-            }
-   
-        </script>
-    </body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <noscript>
+      <main style="max-width: 40rem; margin: 2rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; line-height: 1.6; color: #18181b;">
+        <h1>Convert Case — Conversor de Caixa de Texto</h1>
+        <p>
+          Ferramenta gratuita para converter texto entre caixa alta, caixa baixa, title case,
+          camelCase, snake_case, kebab-case e outros formatos. Todo o processamento acontece no
+          seu navegador — nenhum texto é enviado a servidores.
+        </p>
+        <ul>
+          <li>Caixa alta, caixa baixa, sentença e título</li>
+          <li>camelCase, PascalCase, snake_case, kebab-case</li>
+          <li>Limpar espaços, trim, inverter texto</li>
+          <li>Mascaramento e caracteres aleatórios</li>
+          <li>Copiar e upload de arquivos .txt</li>
+        </ul>
+        <p>Ative o JavaScript para usar o conversor.</p>
+      </main>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
-
