@@ -4,6 +4,22 @@
 
 @layer base {
   body {
-    @apply bg-zinc-100 text-zinc-900 antialiased;
+    @apply bg-[#eef0f3] text-zinc-900 antialiased;
+  }
+}
+
+@layer components {
+  .toolbar-btn {
+    @apply inline-flex items-center justify-center rounded-md border border-zinc-200/90 bg-white px-3 py-1.5 text-sm text-zinc-700 shadow-sm transition
+      hover:border-zinc-300 hover:bg-zinc-50 active:scale-[0.98];
+  }
+
+  .toolbar-btn-accent {
+    @apply inline-flex items-center justify-center rounded-md bg-emerald-600 px-3.5 py-1.5 text-sm font-medium text-white shadow-sm transition
+      hover:bg-emerald-700 active:scale-[0.98];
+  }
+
+  .toolbar-section {
+    @apply rounded-lg border border-zinc-200/70 bg-zinc-50/80 p-3;
   }
 }

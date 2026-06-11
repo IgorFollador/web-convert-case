@@ -4,7 +4,7 @@ import type { TextTransformId } from '@/lib/textTransforms';
 type ToolbarButton = {
   id: TextTransformId | 'copy' | 'clear' | 'upload';
   label: string;
-  variant?: 'primary' | 'accent';
+  accent?: boolean;
 };
 
 type ToolbarGroup = {
@@ -43,14 +43,6 @@ const TOOLBAR_GROUPS: ToolbarGroup[] = [
       { id: 'random', label: '@#!&*%$' },
     ],
   },
-  {
-    label: 'Ações',
-    buttons: [
-      { id: 'copy', label: 'Copiar', variant: 'accent' },
-      { id: 'clear', label: 'Limpar' },
-      { id: 'upload', label: 'Upload .txt' },
-    ],
-  },
 ];
 
 type ToolbarProps = {
@@ -60,13 +52,6 @@ type ToolbarProps = {
   onUpload: (content: string) => void;
   copied: boolean;
 };
-
-function buttonClass(variant?: 'primary' | 'accent') {
-  if (variant === 'accent') {
-    return 'inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-700';
-  }
-  return 'inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50';
-}
 
 export function Toolbar({ onTransform, onCopy, onClear, onUpload, copied }: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -100,7 +85,7 @@ export function Toolbar({ onTransform, onCopy, onClear, onUpload, copied }: Tool
   };
 
   return (
-    <div className="border-b border-zinc-200/80 bg-white px-4 py-3">
+    <div className="border-t border-zinc-200/80 bg-zinc-50/60 px-4 py-4 md:px-5">
       <input
         ref={fileInputRef}
         type="file"
@@ -108,23 +93,42 @@ export function Toolbar({ onTransform, onCopy, onClear, onUpload, copied }: Tool
         className="hidden"
         onChange={handleFileChange}
       />
-      <div className="mx-auto flex max-w-7xl flex-col gap-3">
+
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => handleClick('copy')}
+          className="toolbar-btn-accent"
+        >
+          {copied ? 'Copiado!' : 'Copiar texto'}
+        </button>
+        <button type="button" onClick={() => handleClick('clear')} className="toolbar-btn">
+          Limpar
+        </button>
+        <button type="button" onClick={() => handleClick('upload')} className="toolbar-btn">
+          Upload .txt
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {TOOLBAR_GROUPS.map((group) => (
-          <div key={group.label} className="flex flex-wrap items-center gap-2">
-            <span className="w-20 shrink-0 text-xs font-medium uppercase tracking-wide text-zinc-400">
+          <section key={group.label} className="toolbar-section">
+            <h2 className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-zinc-500">
               {group.label}
-            </span>
-            {group.buttons.map((button) => (
-              <button
-                key={button.id}
-                type="button"
-                onClick={() => handleClick(button.id)}
-                className={buttonClass(button.variant)}
-              >
-                {button.id === 'copy' && copied ? 'Copiado!' : button.label}
-              </button>
-            ))}
-          </div>
+            </h2>
+            <div className="flex flex-wrap gap-1.5">
+              {group.buttons.map((button) => (
+                <button
+                  key={button.id}
+                  type="button"
+                  onClick={() => handleClick(button.id)}
+                  className="toolbar-btn"
+                >
+                  {button.label}
+                </button>
+              ))}
+            </div>
+          </section>
         ))}
       </div>
     </div>
