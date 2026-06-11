@@ -50,7 +50,24 @@ npm run preview
 
 O deploy é feito automaticamente via GitHub Actions ao fazer push na branch `main`.
 
-Configure o GitHub Pages em **Settings → Pages → Source: GitHub Actions**.
+### Configuração obrigatória do GitHub Pages
+
+Em **Settings → Pages → Build and deployment**:
+
+1. **Source** deve ser **GitHub Actions** (não use "Deploy from a branch" / branch `main`)
+2. Se estiver em "Deploy from a branch", o site publica o código-fonte (`index.html` com `/src/main.tsx`) em vez do build — isso causa erro de MIME type e `icon.png` 404
+
+Após alterar para GitHub Actions, rode novamente o workflow **Deploy to GitHub Pages** em **Actions** (ou faça um push em `main`).
+
+### Verificar se o deploy está correto
+
+No código-fonte da página em produção deve aparecer algo como:
+
+```html
+<script type="module" src="/assets/index-XXXXX.js">
+```
+
+Se aparecer `/src/main.tsx`, a source do Pages ainda está errada.
 
 ## Domínio customizado
 
