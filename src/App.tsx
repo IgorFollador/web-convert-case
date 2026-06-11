@@ -2,12 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppIcon } from './components/AppIcon';
 import { TextEditor } from './components/TextEditor';
 import { Toolbar } from './components/Toolbar';
-import { EXAMPLE_TEXT } from './content/exampleText';
 import { useTextHistory } from './hooks/useTextHistory';
 import { TEXT_TRANSFORMS, copyToClipboard, type TextTransformId } from './lib/textTransforms';
 
 function App() {
-  const { text, setText, applyChange, undo, canUndo } = useTextHistory(EXAMPLE_TEXT);
+  const { text, setText, applyChange, undo, canUndo } = useTextHistory('');
   const [copied, setCopied] = useState(false);
 
   const charCount = text.length;
