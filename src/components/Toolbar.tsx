@@ -50,10 +50,20 @@ type ToolbarProps = {
   onCopy: () => void;
   onClear: () => void;
   onUpload: (content: string) => void;
+  onUndo: () => void;
+  canUndo: boolean;
   copied: boolean;
 };
 
-export function Toolbar({ onTransform, onCopy, onClear, onUpload, copied }: ToolbarProps) {
+export function Toolbar({
+  onTransform,
+  onCopy,
+  onClear,
+  onUpload,
+  onUndo,
+  canUndo,
+  copied,
+}: ToolbarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = (id: ToolbarButton['id']) => {
@@ -101,6 +111,15 @@ export function Toolbar({ onTransform, onCopy, onClear, onUpload, copied }: Tool
           className="toolbar-btn-accent"
         >
           {copied ? 'Copiado!' : 'Copiar texto'}
+        </button>
+        <button
+          type="button"
+          onClick={onUndo}
+          disabled={!canUndo}
+          className="toolbar-btn"
+          title="Desfazer (Ctrl+Z)"
+        >
+          Desfazer
         </button>
         <button type="button" onClick={() => handleClick('clear')} className="toolbar-btn">
           Limpar

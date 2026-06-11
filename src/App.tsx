@@ -1,12 +1,13 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AppIcon } from './components/AppIcon';
 import { TextEditor } from './components/TextEditor';
 import { Toolbar } from './components/Toolbar';
 import { EXAMPLE_TEXT } from './content/exampleText';
+import { useTextHistory } from './hooks/useTextHistory';
 import { TEXT_TRANSFORMS, copyToClipboard, type TextTransformId } from './lib/textTransforms';
 
 function App() {
-  const [text, setText] = useState(EXAMPLE_TEXT);
+  const { text, setText, applyChange, undo, canUndo } = useTextHistory(EXAMPLE_TEXT);
   const [copied, setCopied] = useState(false);
 
   const charCount = text.length;
@@ -15,9 +16,12 @@ function App() {
     return trimmed ? trimmed.split(/\s+/).length : 0;
   }, [text]);
 
-  const handleTransform = useCallback((id: TextTransformId) => {
-    setText((current) => TEXT_TRANSFORMS[id](current));
-  }, []);
+  const handleTransform = useCallback(
+    (id: TextTransformId) => {
+      applyChange((current) => TEXT_TRANSFORMS[id](current));
+    },
+    [applyChange],
+  );
 
   const handleCopy = useCallback(async () => {
     if (!text) return;
@@ -29,12 +33,27 @@ function App() {
   }, [text]);
 
   const handleClear = useCallback(() => {
-    setText('');
-  }, []);
+    applyChange('');
+  }, [applyChange]);
 
-  const handleUpload = useCallback((content: string) => {
-    setText(content);
-  }, []);
+  const handleUpload = useCallback(
+    (content: string) => {
+      applyChange(content);
+    },
+    [applyChange],
+  );
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey && canUndo) {
+        e.preventDefault();
+        undo();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [canUndo, undo]);
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -71,6 +90,8 @@ function App() {
             onCopy={handleCopy}
             onClear={handleClear}
             onUpload={handleUpload}
+            onUndo={undo}
+            canUndo={canUndo}
             copied={copied}
           />
         </div>

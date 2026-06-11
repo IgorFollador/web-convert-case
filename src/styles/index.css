@@ -11,7 +11,8 @@
 @layer components {
   .toolbar-btn {
     @apply inline-flex items-center justify-center rounded-md border border-zinc-200/90 bg-white px-3 py-1.5 text-sm text-zinc-700 shadow-sm transition
-      hover:border-zinc-300 hover:bg-zinc-50 active:scale-[0.98];
+      hover:border-zinc-300 hover:bg-zinc-50 active:scale-[0.98]
+      disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-zinc-200/90 disabled:hover:bg-white disabled:active:scale-100;
   }
 
   .toolbar-btn-accent {
